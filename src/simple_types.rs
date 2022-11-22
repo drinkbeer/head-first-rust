@@ -4,6 +4,7 @@ fn main() {
     range_operation(true);
     char_opeartion(true);
     bool_operation(true);
+    string_operation(true);
 }
 
 fn num_variables(enabled: bool) {
@@ -118,4 +119,27 @@ fn bool_operation(enabled: bool) {
     } else {
         println!("这是段无意义的代码");
     }
+}
+
+fn string_operation(enabled: bool) {
+    if !enabled {
+        return;
+    }
+
+    let s1 = "hello"; // s1 is '&str' type, which is hard-coding the length and value of the string
+    // s1.push_str(", world!"); // error: `s1` does not have a method named `push_str`
+
+    let s2 = String::from("hello"); // s2 is 'String' type, which is dynamically allocated
+    // s2.push_str(", world!"); // error: cannot borrow `s2` as mutable, as it is not declared as mutable
+
+    let mut s3 = String::from("hello");
+    s3.push_str(", world!"); // ok
+
+    println!("{} {} {} ", s1, s2, s3);
+
+    let mut s4 = "hello";
+    println!("s4 = {}", s4);
+    s4 = "world"; // s4 is a pointer to a string in stack, so it's a copy, no ownership transfer
+    println!("s4 = {}", s4);
+    // s4.push_str(", world!"); // error: `s4` does not have a method named `push_str`
 }
